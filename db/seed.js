@@ -3,6 +3,7 @@
 // grab our client with destructuring from the export in index.js
 const { 
   client,
+  getAllUsuers,
  createUser
 } = require('./index');
 
@@ -66,6 +67,7 @@ async function rebuildDB() {
 
     await dropTables();
     await createTables();
+    await createInitialUsers();
   } catch (error) {
     throw error;
   }
