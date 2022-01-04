@@ -3,8 +3,26 @@
 // grab our client with destructuring from the export in index.js
 const { 
   client,
-  getAllUsuers 
+ createUser
 } = require('./index');
+
+
+// new function, should attempt to create a few users
+async function createInitialUsers() {
+  try {
+    console.log("Starting to create users...");
+
+    const albert = await createUser({ username: 'albert', password: 'bertie99' });
+
+    console.log(albert);
+
+    console.log("Finished creating users!");
+  } catch(error) {
+    console.error("Error creating users!");
+    throw error;
+  }
+}
+
 
 async function dropTables() {
   try {
