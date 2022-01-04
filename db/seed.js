@@ -1,4 +1,4 @@
-// inside db/seed.js
+// used this file to bild and rebuild the tables and fill them with some startign data
 
 // grab our client with destructuring from the export in index.js
 const { 
@@ -22,4 +22,39 @@ async function testDB() {
   }
 }
 
-testDB();
+
+async function dropTables() {
+try {
+  await client.query(`
+  
+  
+  `);
+} catch (error) {
+  throw error;
+  }
+}
+
+async function createTables() {
+  try {
+    await client.query(`
+    
+    `);
+  } catch (error) {
+    throw error;
+  }
+}
+
+async function rebuildDB() {
+  try {
+    client.connect();
+
+    await dropTables();
+    await createTables();
+  } catch (error) {
+    console.error(error)
+  } finally {
+    client.end();
+  }
+}
+
+rebuildDB();
