@@ -6,36 +6,27 @@ const {
   getAllUsuers 
 } = require('./index');
 
-async function testDB() {
-  try {
-    // connect the client to the database, finally
-    client.connect();
-
-    const users = await getAllUsuers();
-    // for now, logging is a fine way to see what's up
-    console.log(users);
-  } catch (error) {
-    console.error(error);
-  } finally {
-    // it's important to close out the client connection
-    client.end();
-  }
-}
-
-
 async function dropTables() {
-try {
-  await client.query(`
-  DROP TABLE IF EXSISTS users;
-  
-  `);
-} catch (error) {
-  throw error;
-  }
+  try {
+    console.log("Starting to drop tables...")
+
+
+    await client.query(`
+    DROP TABLE IF EXISTS users;
+    `);
+
+    console.log("Finished dropping tables!")
+  } catch (error) {
+    console.error("Error dropping tables!")
+    throw error;
+    }
 }
 
 async function createTables() {
   try {
+    console.log("Starting to build tables...");
+
+
     await client.query(`
       CREATE TABLE users (
         id SERIAL PRIMARY KEY,
@@ -43,7 +34,10 @@ async function createTables() {
         password varchar(255) NOT NULL
       );
     `);
+
+    console.log("Finished building tables!");
   } catch (error) {
+    console.error("Error building tables!");
     throw error;
   }
 }
@@ -55,10 +49,26 @@ async function rebuildDB() {
     await dropTables();
     await createTables();
   } catch (error) {
-    console.error(error)
-  } finally {
-    client.end();
+    throw error;
   }
 }
 
-rebuildDB();
+async function testDB() {
+  try {
+    console.log("Starting to test database...");
+
+    const users = await getAllUsuers();
+    console.log("getAllUsers:", users);
+
+    console.log("Finished database tests!");
+  } catch (error) {
+    console.error("Error testing database!");
+    throw error;
+  } 
+}
+
+rebuildDB()
+  .then(testDB)
+  .catch(console.error)
+  //why the anon function?
+  .finally(() => client.end())
