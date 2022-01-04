@@ -15,6 +15,7 @@ async function createInitialUsers() {
 
     const albert = await createUser({ username: 'albert', password: 'bertie99' });
 
+
     console.log(albert);
 
     console.log("Finished creating users!");
