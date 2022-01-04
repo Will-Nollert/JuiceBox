@@ -9,10 +9,10 @@ async function testDB() {
     client.connect();
 
     // queries are promises, so we can await them
-    const result = await client.query(`SELECT * FROM users;`);
+    const { rows } = await client.query(`SELECT * FROM users;`);
 
     // for now, logging is a fine way to see what's up
-    console.log(result);
+    console.log(rows);
   } catch (error) {
     console.error(error);
   } finally {
