@@ -3,7 +3,7 @@
 // grab our client with destructuring from the export in index.js
 const { 
   client,
-  getAllUsuers,
+  getAllUsers,
  createUser
 } = require('./index');
 
@@ -13,9 +13,9 @@ async function createInitialUsers() {
   try {
     console.log("Starting to create users...");
 
-    const Albert = await createUser({ username: 'albert', password: 'bertie99' });
-    const Sandra = await createUser({ username: 'Sandra', password: '2sandy4me' });
-    const Glamgal = await createUser({ username: 'Glamgal', password: 'soglam' });
+    const Albert = await createUser({ username: 'albert', password: 'bertie99', name: "Al Bert", location: "Bertyland"});
+    const Sandra = await createUser({ username: 'Sandra', password: '2sandy4me', name: "San Dra", location: "Sandyland"});
+    const Glamgal = await createUser({ username: 'Glamgal', password: 'soglam', name: "Glam Gal", location: "Upper East Side"});
 
 
     console.log(Albert, Sandra, Glamgal);
@@ -53,7 +53,11 @@ async function createTables() {
       CREATE TABLE users (
         id SERIAL PRIMARY KEY,
         username varchar(255) UNIQUE NOT NULL,
-        password varchar(255) NOT NULL
+        password varchar(255) NOT NULL,
+        name VARCHAR(255) NOT NULL,
+        location VARCHAR(255) NOT NULL,
+        active BOOLEAN DEFAULT true
+          
       );
     `);
 
@@ -80,7 +84,7 @@ async function testDB() {
   try {
     console.log("Starting to test database...");
 
-    const users = await getAllUsuers();
+    const users = await getAllUsers();
     console.log("getAllUsers:", users);
 
     console.log("Finished database tests!");
