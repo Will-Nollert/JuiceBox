@@ -29,9 +29,14 @@ async function createInitialUsers() {
 }
 
 async function dropTables() {
+  
   try {
     console.log("Starting to drop tables...")
 
+
+    await client.query(`
+    DROP TABLE IF EXISTS posts;
+    `);
 
     await client.query(`
     DROP TABLE IF EXISTS users;
@@ -67,6 +72,7 @@ async function createTables() {
     throw error;
   }
 }
+
 
 async function rebuildDB() {
   try {
