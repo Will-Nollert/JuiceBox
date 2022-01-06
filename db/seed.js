@@ -4,7 +4,8 @@
 const { 
   client,
   getAllUsers,
- createUser
+ createUser,
+ updateUser,
 } = require('./index');
 
 
@@ -26,7 +27,6 @@ async function createInitialUsers() {
     throw error;
   }
 }
-
 
 async function dropTables() {
   try {
@@ -50,7 +50,7 @@ async function createTables() {
 
 
     await client.query(`
-      CREATE TABLE users (
+        CREATE TABLE users (
         id SERIAL PRIMARY KEY,
         username varchar(255) UNIQUE NOT NULL,
         password varchar(255) NOT NULL,
@@ -84,18 +84,27 @@ async function testDB() {
   try {
     console.log("Starting to test database...");
 
+    console.log("Calling getAllUsers")
     const users = await getAllUsers();
-    console.log("getAllUsers:", users);
+    console.log("Result:", users);
+
+    console.log("Calling updateUser on users[0]")
+    const updateUserResult = await updateUser(users[0].id, {
+      name: "Newname Sogood",
+      location: "Lesterville, KY"
+    });
+    console.log("Result:", updateUserResult);
 
     console.log("Finished database tests!");
   } catch (error) {
     console.error("Error testing database!");
     throw error;
-  } 
+  }
 }
+
+
 
 rebuildDB()
   .then(testDB)
   .catch(console.error)
-  //why the anon function?
   .finally(() => client.end())
