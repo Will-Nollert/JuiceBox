@@ -1,17 +1,17 @@
 // api/users.js
 
 const express = require('express');
-const usersRouter = express.Router();
+const router = express.Router();
 const { getAllUsers } = require('../db');
 
 
-usersRouter.use((req, res, next) => {
+router.use((req, res, next) => {
   console.log("A request is being made to /users");
 
   next(); 
 });
 
-usersRouter.get('/', async (req, res) => {
+router.get('/', async (req, res) => {
     const users = await getAllUsers();
   
     res.send({
@@ -19,4 +19,4 @@ usersRouter.get('/', async (req, res) => {
     });
   });
 
-module.exports = usersRouter;
+module.exports = router;
