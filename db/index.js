@@ -188,7 +188,6 @@ async function getUserById(userId) {
   }
 }
 
-
 async function createTags(tagList) {
   if (tagList.length === 0) {
     return;
@@ -226,7 +225,6 @@ async function createTags(tagList) {
   }
 }
 
-
 async function getPostById(postId) {
   try {
     const { rows: [ post ]  } = await client.query(`
@@ -259,7 +257,6 @@ async function getPostById(postId) {
   }
 }
 
-
 //moved over with the other one 
 async function addTagsToPost(postId, tagList) {
   
@@ -288,6 +285,24 @@ async function createPostTag(postId, tagId) {
   }
 }
 
+async function getPostsByTagName(tagName) {
+  try {
+    const { rows: postIds } = await client.query(`
+      SELECT posts.id
+      FROM posts
+      JOIN post_tags ON posts.id=post_tags."postId"
+      JOIN tags ON tags.id=post_tags."tagId"
+      WHERE tags.name=$1;
+    `, [tagName]);
+
+    return await Promise.all(postIds.map(
+      post => getPostById(post.id)
+    ));
+  } catch (error) {
+    throw error;
+  }
+} 
+
 
 //exports here
 module.exports = {
@@ -303,4 +318,5 @@ module.exports = {
   createTags,
   getPostById,
   addTagsToPost,
+  getPostsByTagName,
 };

@@ -17,6 +17,7 @@ const {
   createTags,
   getPostById,  
   addTagsToPost,
+  getPostsByTagName,
 } = require('./index');
 
 
@@ -183,6 +184,10 @@ async function testDB() {
     });
     console.log("Result:", updatePostTagsResult);
 
+
+    console.log("Calling getPostsByTagName with #happy");
+    const postsWithHappy = await getPostsByTagName("#happy");
+    console.log("Result:", postsWithHappy);
 
     console.log("Calling getUserById with 1");
     const albert = await getUserById(1);
