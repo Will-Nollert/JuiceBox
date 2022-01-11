@@ -12,9 +12,12 @@ router.use((req, res, next) => {
 });
 
 router.get('/', async (req, res) => {
-    const posts = await getAllPosts
+    const posts = await getAllPosts();
     
-    res.send({ posts: [] });
+    
+    res.send({ 
+      posts: posts
+     });
   });
 
 module.exports = router;

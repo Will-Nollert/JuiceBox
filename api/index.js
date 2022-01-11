@@ -2,12 +2,12 @@ const express = require('express');
 const apiRouter = express.Router();
 
 const usersRouter = require('./users');
-const postRouter = require('./posts');
+const postsRouter = require('./posts');
 const tagsRouter = require('./tags');
 
 
 apiRouter.use('/users', usersRouter);
-apiRouter.use('/posts', postRouter);
+apiRouter.use('/posts', postsRouter);
 apiRouter.use('/tags', tagsRouter);
 
 
