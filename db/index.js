@@ -1,7 +1,7 @@
 //  db/index.js
 const { Client } = require("pg"); // imports the pg module
 const client = new Client(
-  process.env.DATABASE_URL || "postgres://localhost:5432/juicebox-dev"
+  process.env.DATABASE_URL || "postgres://localhost:3000/juicebox-dev"
 );
 
 //start of user helper functions
